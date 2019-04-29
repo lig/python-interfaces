@@ -1,5 +1,10 @@
+# ignore hidden
 .*
 *~
 \#*\#
 
+# allow gitignore
 !.gitignore
+
+# ignore dev and build files
+/dist
