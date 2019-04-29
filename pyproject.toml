@@ -1,0 +1,27 @@
+[build-system]
+requires = ["flit"]
+build-backend = "flit.buildapi"
+
+[tool.flit.metadata]
+module = "interfaces"
+author = "Serge Matveenko"
+author-email = "lig@countzero.co"
+home-page = "https://github.com/lig/interfaces"
+classifiers = [
+    "Development Status :: 2 - Pre-Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3 :: Only",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Typing :: Typed",
+]
+requires-python = "~=3.7"
+dist-name = "interfaces37"
+keywords = "python interfaces implemetation pep"
+
+[tool.black]
+target-version = ["py37"]
+skip-string-normalization = true
