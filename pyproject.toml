@@ -18,7 +18,7 @@ classifiers = [
     "Topic :: Software Development :: Libraries :: Python Modules",
     "Typing :: Typed",
 ]
-requires-python = "~=3.7"
+requires-python = ">=3.7"
 dist-name = "interfaces37"
 keywords = "python interfaces implemetation pep"
 
