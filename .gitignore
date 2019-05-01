@@ -6,5 +6,8 @@
 # allow gitignore
 !.gitignore
 
+# python
+*.pyc
+
 # ignore dev and build files
 /dist
