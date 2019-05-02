@@ -1,18 +1,17 @@
 """A new approach to interfaces in Python
 """
-from interfaces.base import interface
-from interfaces.compat import object
-from interfaces.exceptions import (
-    InterfaceNoInstanceAllowedError,
-    InterfaceNotImplementedError,
-)
+import interfaces.base
+import interfaces.compat
+import interfaces.exceptions
 
 
 __version__ = '0.1.0-dev'
 
-__all__ = [
-    'interface',
-    'object',
-    'InterfaceNoInstanceAllowedError',
-    'InterfaceNotImplementedError',
-]
+__all__ = ['Interface', 'Object']
+
+
+interface = Interface = interfaces.base.Interface
+object = Object = interfaces.compat.Object
+
+InterfaceNoInstanceAllowedError = interfaces.exceptions.InterfaceNoInstanceAllowedError
+InterfaceNotImplementedError = interfaces.exceptions.InterfaceNotImplementedError

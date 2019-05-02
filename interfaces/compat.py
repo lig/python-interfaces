@@ -1,18 +1,17 @@
 import collections.abc
 import typing
 
-import interfaces
 import interfaces.base
 
 
-__all__ = ['object']
+__all__ = ['Object']
 
 
-class object:
+class Object:
     def __init_subclass__(
         cls,
         implements: typing.Union[
-            typing.Iterable[interfaces.interface], interfaces.interface
+            typing.Iterable[interfaces.base.Interface], interfaces.base.Interface
         ],
         **kwargs,
     ):
@@ -20,7 +19,7 @@ class object:
             implements = (implements,)
 
         for iface in implements:
-            if not issubclass(iface, interfaces.interface):
+            if not issubclass(iface, interfaces.base.Interface):
                 raise TypeError(
                     "Arguments to `implements` must be subclasses of `interface`,"
                     " not `%r`",

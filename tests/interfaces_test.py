@@ -144,3 +144,64 @@ def test_120_interface_inheritance(typeT1, typeT2):
 
         def method_b(arg: typeT2) -> typeT2:
             pass
+
+
+def test_130_error_not_implemented_with_inheritance(typeT1, typeT2):
+    class TestInterfaceA(interfaces.interface):
+        def method_a(arg: typeT1) -> typeT1:
+            pass
+
+    class TestInterfaceB(TestInterfaceA):
+        def method_b(arg: typeT2) -> typeT2:
+            pass
+
+    with pytest.raises(interfaces.InterfaceNotImplementedError):
+
+        class TestClass(interfaces.object, implements=[TestInterfaceB]):
+            def method_b(arg: typeT2) -> typeT2:
+                pass
+
+
+def test_140_interface_multiple_inheritance(typeT1, typeT2):
+    class TestInterfaceA(interfaces.interface):
+        def method_a(arg: typeT1) -> typeT1:
+            pass
+
+    class TestInterfaceB(interfaces.interface):
+        def method_b(arg: typeT2) -> typeT2:
+            pass
+
+    class TestInterfaceC(TestInterfaceA, TestInterfaceB):
+        pass
+
+    class TestClass(interfaces.object, implements=[TestInterfaceB]):
+        def method_a(arg: typeT1) -> typeT1:
+            pass
+
+        def method_b(arg: typeT2) -> typeT2:
+            pass
+
+
+def test_150_error_not_implemented_with_multiple_inheritance(typeT1, typeT2):
+    class TestInterfaceA(interfaces.interface):
+        def method_a(arg: typeT1) -> typeT1:
+            pass
+
+    class TestInterfaceB(interfaces.interface):
+        def method_b(arg: typeT2) -> typeT2:
+            pass
+
+    class TestInterfaceC(TestInterfaceA, TestInterfaceB):
+        pass
+
+    with pytest.raises(interfaces.InterfaceNotImplementedError):
+
+        class TestClassA(interfaces.object, implements=[TestInterfaceC]):
+            def method_a(arg: typeT1) -> typeT1:
+                pass
+
+    with pytest.raises(interfaces.InterfaceNotImplementedError):
+
+        class TestClassB(interfaces.object, implements=[TestInterfaceC]):
+            def method_b(arg: typeT2) -> typeT2:
+                pass
