@@ -2,14 +2,15 @@ import collections.abc
 import inspect
 import typing
 
-from .exceptions import InterfaceNotImplementedError
+import interfaces.exceptions
 
 
 __all__ = ['interface', 'isimplementation']
 
 
 class interface:
-    pass
+    def __new__(cls, *args, **kwargs):
+        raise interfaces.exceptions.InterfaceNoInstanceAllowedError(iface=cls)
 
 
 def isimplementation(
@@ -69,8 +70,8 @@ def _isimplementation_fail(
     cls: type, attr_name: str, iface: interface, raise_errors: bool
 ) -> bool:
     if raise_errors:
-        raise InterfaceNotImplementedError(
-            "`%r` must fully implement `%s` method of `%r`", cls, attr_name, iface
+        raise interfaces.exceptions.InterfaceNotImplementedError(
+            klass=cls, method_name=attr_name, iface=iface
         )
     else:
         return False

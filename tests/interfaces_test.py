@@ -107,3 +107,11 @@ def test_100_error_property_is_implemented_as_method_no_annotations():
         class TestClass(interfaces.object, implements=[TestInterface]):
             def value(self):
                 return 'sample string'
+
+
+def test_110_error_interface_instance():
+    class TestInterface(interfaces.interface):
+        pass
+
+    with pytest.raises(interfaces.InterfaceNoInstanceAllowedError):
+        _ = TestInterface()
