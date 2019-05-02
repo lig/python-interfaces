@@ -1,7 +1,11 @@
+from __future__ import annotations
+
 import collections.abc
-import inspect
-import typing
 import functools
+import inspect
+import types
+import typing
+
 import interfaces.exceptions
 
 
@@ -9,31 +13,31 @@ __all__ = ['Interface', 'isimplementation']
 
 
 class Interface:
-    def __new__(cls, *args, **kwargs) -> None:
+    def __new__(cls, *args: typing.Any, **kwargs: typing.Any) -> None:
         raise interfaces.exceptions.InterfaceNoInstanceAllowedError(iface=cls)
 
-    def __init_subclass__(cls, **kwargs):
+    def __init_subclass__(cls) -> None:
         cls_method_names = _PartialInterfaceSpec(cls).keys()
         for cls_base in cls.__bases__:
             base_spec = interface_spec(cls_base)
-            if cls_method_names.isdisjoint(base_spec):
+            if cls_method_names.isdisjoint(base_spec.keys()):
                 continue
             raise interfaces.exceptions.InterfaceOverloadingError(
                 method_names=set(base_spec).intersection(cls_method_names),
                 ancestor_iface=cls_base,
                 descendant_iface=cls,
             )
-        return super().__init_subclass__(**kwargs)
+        super().__init_subclass__()
 
     @classmethod
-    def __interface_spec__(cls):
+    def __interface_spec__(cls) -> InterfaceSpec:
         return InterfaceSpec(iface=cls)
 
 
 class InterfaceSpec(collections.abc.Mapping):
     slots = ('_iface', '_iface_spec')
 
-    def __init__(self, iface: Interface) -> None:
+    def __init__(self, iface: typing.Type[Interface]) -> None:
         self._iface = iface
         self._iface_spec = {
             attr_name: getattr(iface, attr_name)
@@ -41,38 +45,44 @@ class InterfaceSpec(collections.abc.Mapping):
             if not (attr_name[:2] == attr_name[-2:] == '__')
         }
 
-    def __getitem__(self, key):
+    def __getitem__(self, key: str) -> types.MethodType:
         return self._iface_spec[key]
 
-    def __iter__(self):
+    def __iter__(self) -> typing.Iterator[str]:
         return iter(self._iface_spec)
 
-    def __len__(self):
+    def __len__(self) -> int:
         return len(self._iface_spec)
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return f"{self.__class__.__name__!s}({self._iface!r})"
 
     @staticmethod
-    def _get_iface_attrs(iface):
+    def _get_iface_attrs(
+        iface: typing.Type[Interface]
+    ) -> collections.abc.Iterable[str]:
         return dir(iface)
 
 
 class _PartialInterfaceSpec(InterfaceSpec):
     @staticmethod
-    def _get_iface_attrs(iface):
-        return vars(iface)
+    def _get_iface_attrs(
+        iface: typing.Type[Interface]
+    ) -> collections.abc.Iterable[str]:
+        return vars(iface).keys()
 
 
 def isimplementation(
     cls: type,
-    interface_or_iterable: typing.Union[typing.Iterable[Interface], Interface],
+    interface_or_iterable: typing.Union[
+        typing.Iterable[typing.Type[Interface]], typing.Type[Interface]
+    ],
 ) -> bool:
 
     return all(
         _isimplementation(cls, iface)
         for iface in (
-            interface_or_iterable
+            interface_or_iterable  # type: ignore
             if isinstance(interface_or_iterable, collections.abc.Iterable)
             else (interface_or_iterable,)
         )
@@ -80,12 +90,12 @@ def isimplementation(
 
 
 @functools.lru_cache(maxsize=None)
-def interface_spec(iface: Interface) -> InterfaceSpec:
+def interface_spec(iface: typing.Type[Interface]) -> InterfaceSpec:
     return iface.__interface_spec__()
 
 
 def _isimplementation(
-    cls: type, iface: Interface, *, raise_errors: bool = False
+    cls: type, iface: typing.Type[Interface], *, raise_errors: bool = False
 ) -> bool:
 
     for attr_name, iface_attr in interface_spec(iface).items():
@@ -129,7 +139,7 @@ def _isimplementation(
 
 
 def _isimplementation_fail(
-    cls: type, attr_name: str, iface: Interface, raise_errors: bool
+    cls: type, attr_name: str, iface: typing.Type[Interface], raise_errors: bool
 ) -> bool:
     if raise_errors:
         raise interfaces.exceptions.InterfaceNotImplementedError(

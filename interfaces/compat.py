@@ -11,10 +11,10 @@ class Object:
     def __init_subclass__(
         cls,
         implements: typing.Union[
-            typing.Iterable[interfaces.base.Interface], interfaces.base.Interface
+            typing.Iterable[typing.Type[interfaces.base.Interface]],
+            typing.Type[interfaces.base.Interface],
         ],
-        **kwargs,
-    ):
+    ) -> None:
         if not isinstance(implements, collections.abc.Iterable):
             implements = (implements,)
 
@@ -29,4 +29,4 @@ class Object:
         for iface in implements:
             interfaces.base._isimplementation(cls, iface, raise_errors=True)
 
-        super().__init_subclass__(**kwargs)
+        super().__init_subclass__()

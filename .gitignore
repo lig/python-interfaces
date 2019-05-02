@@ -6,6 +6,9 @@
 # allow gitignore
 !.gitignore
 
+# allow some dot files
+!/.pre-commit-config.yaml
+
 # python
 *.pyc
 
