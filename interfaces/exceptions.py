@@ -1,4 +1,8 @@
-__all__ = ['InterfaceNoInstanceAllowedError', 'InterfaceNotImplementedError']
+__all__ = [
+    'InterfaceNoInstanceAllowedError',
+    'InterfaceNotImplementedError',
+    'InterfaceOverloadingError',
+]
 
 
 class InterfaceError(Exception):
@@ -26,4 +30,17 @@ class InterfaceNotImplementedError(InterfaceError):
         return (
             f"`{self._klass!r}` must fully implement `{self._method_name!s}` method of"
             f" `{self._iface}`"
+        )
+
+
+class InterfaceOverloadingError(InterfaceError):
+    def __init__(self, *, method_names, ancestor_iface, descendant_iface):
+        self._method_names = method_names
+        self._ancestor_iface = ancestor_iface
+        self._descendant_iface = descendant_iface
+
+    def __str__(self):
+        return (
+            f"Attempted to overload method(s) `{self._method_names!s}` of"
+            f" `{self._ancestor_iface!r}` in `{self._descendant_iface!r}`"
         )

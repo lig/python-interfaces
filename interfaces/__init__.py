@@ -15,3 +15,4 @@ object = Object = interfaces.compat.Object
 
 InterfaceNoInstanceAllowedError = interfaces.exceptions.InterfaceNoInstanceAllowedError
 InterfaceNotImplementedError = interfaces.exceptions.InterfaceNotImplementedError
+InterfaceOverloadingError = interfaces.exceptions.InterfaceOverloadingError

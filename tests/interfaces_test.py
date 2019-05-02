@@ -205,3 +205,15 @@ def test_150_error_not_implemented_with_multiple_inheritance(typeT1, typeT2):
         class TestClassB(interfaces.object, implements=[TestInterfaceC]):
             def method_b(arg: typeT2) -> typeT2:
                 pass
+
+
+def test_160_error_method_overloading():
+    class TestInterfaceA(interfaces.interface):
+        def method():
+            pass
+
+    with pytest.raises(interfaces.InterfaceOverloadingError):
+
+        class TestInterfaceB(TestInterfaceA):
+            def method():
+                pass
