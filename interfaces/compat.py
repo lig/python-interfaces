@@ -2,6 +2,7 @@ import collections.abc
 import typing
 
 import interfaces.base
+import interfaces.util
 
 
 __all__ = ['Object']
@@ -27,6 +28,6 @@ class Object:
                 )
 
         for iface in implements:
-            interfaces.base._isimplementation(cls, iface, raise_errors=True)
+            interfaces.util._isimplementation(cls, iface, raise_errors=True)
 
         super().__init_subclass__()

@@ -2,9 +2,7 @@ from __future__ import annotations
 
 import typing
 
-
-if typing.TYPE_CHECKING:
-    import interfaces.base
+import interfaces.typing
 
 
 __all__ = [
@@ -19,7 +17,7 @@ class InterfaceError(Exception):
 
 
 class InterfaceNoInstanceAllowedError(InterfaceError):
-    def __init__(self, *, iface: typing.Type[interfaces.base.Interface]) -> None:
+    def __init__(self, *, iface: interfaces.typing.InterfaceType) -> None:
         self._iface = iface
 
     def __str__(self) -> str:
@@ -35,7 +33,7 @@ class InterfaceNotImplementedError(InterfaceError):
         *,
         klass: typing.Type,
         method_name: str,
-        iface: typing.Type[interfaces.base.Interface],
+        iface: interfaces.typing.InterfaceType,
     ) -> None:
         self._klass = klass
         self._method_name = method_name
@@ -53,8 +51,8 @@ class InterfaceOverloadingError(InterfaceError):
         self,
         *,
         method_names: typing.Container[str],
-        ancestor_iface: typing.Type[interfaces.base.Interface],
-        descendant_iface: typing.Type[interfaces.base.Interface],
+        ancestor_iface: interfaces.typing.InterfaceType,
+        descendant_iface: interfaces.typing.InterfaceType,
     ) -> None:
         self._method_names = method_names
         self._ancestor_iface = ancestor_iface
