@@ -174,7 +174,7 @@ def test_140_interface_multiple_inheritance(typeT1, typeT2):
     class TestInterfaceC(TestInterfaceA, TestInterfaceB):
         pass
 
-    class TestClass(interfaces.object, implements=[TestInterfaceB]):
+    class TestClass(interfaces.object, implements=[TestInterfaceC]):
         def method_a(arg: typeT1) -> typeT1:
             pass
 
