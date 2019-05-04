@@ -4,6 +4,7 @@ import collections.abc
 import inspect
 import typing
 
+import interfaces.exceptions
 import interfaces.spec
 import interfaces.typing
 
@@ -12,10 +13,10 @@ __all__ = ['isimplementation']
 
 
 def isimplementation(
-    cls: type,
+    cls: typing.Type,
     interface_or_iterable: typing.Union[
-        typing.Iterable[typing.Type[interfaces.base.Interface]],
-        typing.Type[interfaces.base.Interface],
+        typing.Iterable[interfaces.typing.InterfaceType],
+        interfaces.typing.InterfaceType,
     ],
 ) -> bool:
 

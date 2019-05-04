@@ -11,16 +11,21 @@ __all__ = ['Object']
 class Object:
     def __init_subclass__(
         cls,
-        implements: typing.Union[
-            typing.Iterable[typing.Type[interfaces.base.Interface]],
-            typing.Type[interfaces.base.Interface],
-        ],
+        implements: typing.Optional[
+            typing.Union[
+                typing.Iterable[typing.Type[interfaces.base.Interface]],
+                typing.Type[interfaces.base.Interface],
+            ]
+        ] = None,
     ) -> None:
+        if implements is None:
+            implements = ()
+
         if not isinstance(implements, collections.abc.Iterable):
             implements = (implements,)
 
         for iface in implements:
-            if not issubclass(iface, interfaces.base.Interface):
+            if not isinstance(iface, interfaces.base._InterfaceMeta):
                 raise TypeError(
                     "Arguments to `implements` must be subclasses of `interface`,"
                     " not `%r`",
