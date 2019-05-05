@@ -24,14 +24,14 @@ pip install strict-interfaces
 * Implicit interface implementation
 * Interface inheritance with overloading being restricted
 * Special `isimplementation` function similar to `issubclass`
-* Partial `issubclass` support (see above)
+* Partial `issubclass` support (see below)
 * It's restricted to create an interface instance
 * It's restricted to inherit from `object` and `interface` at the same time
 
 
 ## Usage
 
-### Explicit implemetation
+### Explicit implementation
 
 ```python
 class TestInterface(interfaces.interface):
