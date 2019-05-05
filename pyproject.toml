@@ -6,7 +6,7 @@ build-backend = "flit.buildapi"
 module = "interfaces"
 author = "Serge Matveenko"
 author-email = "lig@countzero.co"
-home-page = "https://github.com/lig/interfaces"
+home-page = "https://github.com/lig/python-interfaces"
 description-file = "README.md"
 classifiers = [
     "Development Status :: 4 - Beta",
