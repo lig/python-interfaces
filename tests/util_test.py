@@ -132,7 +132,6 @@ def test_080_isimplementation_multi_true_all(typeT1, typeT2, isimplementation):
         def method_b(arg: typeT2) -> typeT2:
             pass
 
-    # NOTE: In this case `isimplementation` behaves different than `issubclass`
     assert isimplementation(TestClass, (TestInterfaceA, TestInterfaceB))
 
 
@@ -149,6 +148,7 @@ def test_090_isimplementation_multi_false_one(typeT1, typeT2):
         def method_a(arg: typeT1) -> typeT1:
             pass
 
+    # NOTE: In this case `isimplementation` behaves different than `issubclass`
     assert not interfaces.isimplementation(TestClass, (TestInterfaceA, TestInterfaceB))
 
 
