@@ -101,3 +101,8 @@ assert issubclass(TestClass, (TestInterfaceA, TestInterfaceB))
 Pull requests, feature requests, and bug reports are always welcome!
 
 [github.com/lig/python-interfaces](https://github.com/lig/python-interfaces)
+
+
+## Discussions
+
+There are threads [on Python Ideas mailing list](https://groups.google.com/forum/#!topic/python-ideas/uZqje5A1Mcs) and [on Reddit](https://www.reddit.com/r/Python/comments/bkwtnp/a_new_approach_to_interfaces_in_python/).
