@@ -21,5 +21,5 @@ class SampleImplementation(
 
 def typed_code_wrapper() -> SampleInterface:
     typed_var: SampleInterface
-    typed_var = SampleInterface()
+    typed_var = SampleImplementation()
     return typed_var
